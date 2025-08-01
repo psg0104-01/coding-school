@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 웹사이트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 헤더 스타일 */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* 메인 콘텐츠 */
+        main {
+            margin-top: 80px;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),url()
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            background: 
+                radial-gradient(ellipse 120px 40px at 0% 50%, rgba(255,255,255,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 120px 40px at 50% 0%, rgba(255,255,255,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 120px 40px at 100% 50%, rgba(255,255,255,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 120px 40px at 50% 100%, rgba(255,255,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+        }
+
+        /* 섹션들 */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        /* 제품 섹션 */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .product-image-text {
+            position: relative;
+            z-index: 1;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* 푸터 */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더/네비게이션 -->
+    <header>
+        <nav>
+            <div class="logo">Airion</div>
+            <ul class="nav-links">
+                <li><a href="#home">홈</a></li>
+                <li><a href="#about">소개</a></li>
+                <li><a href="#products">제품</a></li>
+                <li><a href="#services">우리의 기술</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <!-- 히어로 섹션 -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>환영합니다!</h1>
+                <p>Airion을 방문해주셔서 감사합니다.</p>
+                <a href="#about" class="btn">더 알아보기</a>
+                <a href="#products" class="btn btn-success">제품 보기</a>
+            </div>
+        </section>
+
+        <!-- 소개 섹션 -->
+        <section id="about">
+            <h2 class="section-title">소개</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Airion</h3>
+                        <p>우리는 최고의 전기효율을 보여주는 에어컨 회사입니다. 고객의 만족과 에너지 절약을 동시에 실현하는 혁신적인 냉방 솔루션을 제공합니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>우리의 목표</h3>
+                        <p>세계1위 회사가 되어 전 세계 모든 고객에게 최고의 냉방 기술과 서비스를 제공하여, 더 쾌적하고 에너지 효율적인 환경을 만드는 것입니다.</p>
+                    </div>
+                </div>
+                <div class="card" style="grid-column: 1 / -1;">
+                    <div class="card-content">
+                        <h3>우리기술의 철학</h3>
+                        <p>구매자의 시원함을 최우선으로 생각하며, 모든 기술개발과 제품설계에서 사용자의 편안함과 만족을 추구합니다. 우리는 단순히 차가운 바람을 만드는 것이 아니라, 고객의 일상에 진정한 안락함을 제공하는 것을 목표로 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 우리의 기술 섹션 -->
+        <section id="services">
+            <h2 class="section-title">우리의 기술</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>기능</h3>
+                        <p>우리는 우리만의 특수한 기술을 통하여 에너지효율을 최대로 사용합니다.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>서비스</h3>
+                        <p>우리는 무상설치를 해드립니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 제품 섹션 -->
+        <section id="products">
+            <h2 class="section-title">우리의 제품</h2>
+            <div style="display: flex; justify-content: center;">
+                <div class="product-card" style="max-width: 400px;">
+                    <div class="product-image">
+                    
+                        <span class="product-image-text">Airion</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Airion</div>
+                        <div class="product-price">₩400,000</div>
+                        <div class="product-description">최고급 에너지 효율 시스템을 탑재한 프리미엄 에어컨입니다. 스마트 온도 조절과 무음 운전이 특징입니다.</div>
+                        <button class="btn btn-success" onclick="showPurchaseModal('Airion', '400,000')">구매하기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 고객 후기 / 특징 섹션 -->
+        <section style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0 -2rem; padding: 4rem 2rem;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <h2 class="section-title" style="color: #333;">왜 Airion을 선택해야 할까요?</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="color: #667eea;">⚡ 에너지 효율성</h3>
+                            <p>업계 최고 수준의 에너지 효율로 전기요금을 최대 40%까지 절약할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="color: #667eea;">🔇 저소음 운전</h3>
+                            <p>혁신적인 소음 저감 기술로 조용한 환경에서 편안한 휴식을 보장합니다.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="color: #667eea;">🛠️ 무상 A/S</h3>
+                            <p>구매 후 2년간 무상 A/S와 정기 점검 서비스를 제공합니다.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 style="color: #667eea;">❄️ 빠른 냉방</h3>
+                            <p>특허받은 급속 냉각 시스템으로 단 3분 만에 원하는 온도에 도달합니다.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 1rem;">💬 고객 만족도</h3>
+                    <div style="font-size: 2rem; color: #ff6b6b; margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 1rem;">"정말 만족스러운 제품입니다. 전기요금도 많이 줄고 너무 조용해서 잠잘 때도 방해가 안 돼요!"</p>
+                    <p style="font-size: 0.9rem; color: #999;">- 김○○ 고객님</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 연락처 섹션 -->
+        <section id="contact">
+            <h2 class="section-title">연락처</h2>
+            <div style="text-align: center;">
+                <p>이메일: lbkpbc0104@gmail.com</p>
+                <p>전화: 010-8282-5936</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 구매 모달 -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePurchaseModal()">&times;</span>
+            <h2>구매하기</h2>
+            <div id="modalContent">
+                <p><strong>제품명:</strong> <span id="productName"></span></p>
+                <p><strong>가격:</strong> ₩<span id="productPrice"></span></p>
+                <hr style="margin: 1.5rem 0;">
+                <p><strong>주문 정보:</strong></p>
+                <p>📞 전화: 010-8282-5936</p>
+                <p>✉️ 이메일: lbkpbc0104@gmail.com</p>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    위 연락처로 문의하시면 친절하게 상담해드리겠습니다.<br>
+                    무상설치 서비스도 함께 제공됩니다!
+                </p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="showPurchaseForm()">지금 구매</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2025 내 사이트. 모든 권리 보유.</p>
+    </footer>
+
+    <script>
+        // 부드러운 스크롤 효과
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 스크롤 시 헤더 효과
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(102, 126, 234, 0.95)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }
+        });
+
+        function showPurchaseForm() {
+            document.getElementById('modalContent').style.display = 'none';
+            document.getElementById('purchaseForm').style.display = 'block';
+        }
+
+        function showModalContent() {
+            document.getElementById('modalContent').style.display = 'block';
+            document.getElementById('purchaseForm').style.display = 'none';
+        }
+
+        function submitPurchase(event) {
+            event.preventDefault();
+            const email = document.getElementById('buyerEmail').value;
+            const address = document.getElementById('buyerAddress').value;
+            
+            alert(`구매가 완료되었습니다!\n\n배송 정보:\n이메일: ${email}\n주소: ${address}\n\n곧 연락드리겠습니다!`);
+            closePurchaseModal();
+            
+            // 폼 초기화
+            document.getElementById('buyerEmail').value = '';
+            document.getElementById('buyerAddress').value = '';
+            showModalContent();
+        }
+
+        // 구매 모달 관련 함수들
+        function showPurchaseModal(productName, price) {
+            document.getElementById('productName').textContent = productName;
+            document.getElementById('productPrice').textContent = price;
+            document.getElementById('purchaseModal').style.display = 'block';
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+
+        function contactUs() {
+            alert('전화(010-8282-5936) 또는 이메일(lbkpbc0104@gmail.com)로 문의해주세요!');
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            const modal = document.getElementById('purchaseModal');
+            if (event.target === modal) {
+                closePurchaseModal();
+            }
+        }
+    </script>
+</body>
+</html>
